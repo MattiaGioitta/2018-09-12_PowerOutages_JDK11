@@ -44,7 +44,7 @@ public class Simulator {
 		this.interruzioni = this.dao.getInterruzioni(this.idMap);
 		for(Interruzione i : this.interruzioni) {
 			this.queue.add(new Event(i.getTimeInizio(),i,EventType.INIZIO_INTERRUZIONE));
-			//this.queue.add(new Event(i.getTimeFine(),i,EventType.FINE_INTERRUZIONE));
+			this.queue.add(new Event(i.getTimeFine(),i,EventType.FINE_INTERRUZIONE));
 		}
 		
 		for(Nerc n : this.graph.vertexSet()) {
@@ -66,24 +66,21 @@ public class Simulator {
 		case INIZIO_INTERRUZIONE:
 			Nerc donatore = cercaDonatore(e);
 			if(donatore == null) {
-				this.queue.add(new Event(e.getTime(),e.getN(),EventType.CATASTROFE));
+				this.numCatastrofi++;
 			}
 			else if(this.donatori.get(donatore)==false) {
 				this.donatori.replace(donatore, true);
-				this.queue.add(new Event(e.getN().getTimeFine(),e.getN(),EventType.FINE_INTERRUZIONE,donatore));
+				e.getN().getN().setUltimoDonatore(donatore);
+				
 			}
 				
-			else
-				this.queue.add(new Event(e.getTime(),e.getN(),EventType.CATASTROFE));
-			
+			else {
+				this.numCatastrofi++;
+			}
 			break;
 		case FINE_INTERRUZIONE:
-			int giorni = (int) Duration.between(e.getN().getTimeFine(), e.getN().getTimeInizio()).toDays();
-			e.getDonatore().setBonus(e.getDonatore().getBonus()+giorni);
-			break;
-			
-		case CATASTROFE:
-			this.numCatastrofi++;
+			int giorni = (int) Duration.between(e.getN().getTimeInizio(), e.getN().getTimeFine()).toDays();
+			e.getN().getN().setBonus(e.getN().getN().getBonus()+giorni);
 			break;
 		}
 		

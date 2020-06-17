@@ -7,30 +7,10 @@ public class Event implements Comparable<Event> {
 	public enum EventType{
 		INIZIO_INTERRUZIONE,
 		FINE_INTERRUZIONE,
-		CATASTROFE,
 	}
 	
 	private LocalDateTime time;
 	private Interruzione n;
-	private Nerc donatore;
-	/**
-	 * @return the donatore
-	 */
-	public Nerc getDonatore() {
-		return donatore;
-	}
-
-
-
-	/**
-	 * @param donatore the donatore to set
-	 */
-	public void setDonatore(Nerc donatore) {
-		this.donatore = donatore;
-	}
-
-
-
 	private EventType type;
 	
 	
@@ -81,19 +61,9 @@ public class Event implements Comparable<Event> {
 		this.time = time;
 		this.n = n;
 		this.type = type;
-		this.donatore = null;
+		
 	}
 	
-	public Event(LocalDateTime time, Interruzione n, EventType type,Nerc donatore) {
-		super();
-		this.time = time;
-		this.n = n;
-		this.type = type;
-		this.donatore = donatore;
-	}
-
-
-
 	@Override
 	public int compareTo(Event o) {
 		// TODO Auto-generated method stub

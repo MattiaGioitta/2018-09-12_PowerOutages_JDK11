@@ -12,15 +12,35 @@ public class Nerc implements Comparable<Nerc>{
 	private String value;
 	private int bonus;
 	private Map<Nerc,LocalDateTime> riceventi;
+	private Nerc ultimoDonatore;
 
 	public Nerc(int id, String value) {
 		this.id = id;
 		this.value = value;
 		this.bonus = 0;
 		this.riceventi = new HashMap<>();
+		this.ultimoDonatore = null;
 	}
 	
 	
+
+	/**
+	 * @return the ultimoDonatore
+	 */
+	public Nerc getUltimoDonatore() {
+		return ultimoDonatore;
+	}
+
+
+
+	/**
+	 * @param ultimoDonatore the ultimoDonatore to set
+	 */
+	public void setUltimoDonatore(Nerc ultimoDonatore) {
+		this.ultimoDonatore = ultimoDonatore;
+	}
+
+
 
 	/**
 	 * @return the bonus
